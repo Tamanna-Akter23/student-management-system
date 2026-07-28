@@ -1,4 +1,3 @@
-
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -16,5 +15,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# চূড়ান্ত ও নির্ভুল সিএমডি কমান্ড
+# মাইগ্রেশন, স্ট্যাটিক ফাইল কালেকশন এবং গিউনিকর্ন একসাথে নিরাপদে রান করার জন্য
 CMD python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:10000
