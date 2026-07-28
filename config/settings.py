@@ -8,7 +8,7 @@ SECRET_KEY = os.environ.get(
     "temporary-development-secret-key"
 )
 
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 
 ALLOWED_HOSTS = [
     'student-management-system-1-hx91.onrender.com',
