@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div id="content-main">
+  <div class="module filtered" id="changelist">
+    <div id="toolbar">
+      <form method="get">
+        <div>
+          <label for="searchbar"><span class="visually-hidden">Search:</span></label>
+          <input type="text" size="40" name="q" value="{{ query }}" id="searchbar" placeholder="Search student ID or note">
+          <input type="submit" value="Search">
+          {% if query %}<a href="{% url 'admin:notes_mongonote_changelist' %}">Clear</a>{% endif %}
+        </div>
+      </form>
+    </div>
+    <ul class="object-tools">
+      <li><a href="{{ add_url }}" class="addlink">Add student note</a></li>
+    </ul>
+    <div class="results">
+      <table id="result_list">
+        <thead><tr><th>Student ID</th><th>Note</th><th>Created</th><th>Updated</th><th>Actions</th></tr></thead>
+        <tbody>
+        {% for item in items %}
+          <tr class="{% cycle 'row1' 'row2' %}">
+            <th><a href="{% url 'admin:notes_mongonote_change' item.id %}">{{ item.student_id }}</a></th>
+            <td>{{ item.note|truncatechars:120 }}</td>
+            <td>{{ item.created_at|default:"—" }}</td>
+            <td>{{ item.updated_at|default:"—" }}</td>
+            <td>
+              <a href="{% url 'admin:notes_mongonote_change' item.id %}">Edit</a> |
+              <a href="{% url 'admin:notes_mongonote_delete' item.id %}">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">No student notes found.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if page_obj.paginator.num_pages > 1 %}
+    <p class="paginator">
+      {% if page_obj.has_previous %}<a href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}">previous</a>{% endif %}
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      {% if page_obj.has_next %}<a href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}">next</a>{% endif %}
+    </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

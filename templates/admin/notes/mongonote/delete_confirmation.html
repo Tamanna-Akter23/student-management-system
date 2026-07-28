@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<p>Are you sure you want to delete the note for <strong>{{ item.student_id }}</strong>?</p>
+<blockquote>{{ item.note }}</blockquote>
+<form method="post">
+  {% csrf_token %}
+  <div>
+    <input type="hidden" name="post" value="yes">
+    <input type="submit" value="Yes, I'm sure">
+    <a href="{% url 'admin:notes_mongonote_changelist' %}" class="button cancel-link">No, take me back</a>
+  </div>
+</form>
+{% endblock %}

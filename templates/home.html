@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Home | StudentMS{% endblock %}
+{% block content %}
+<section class="hero rounded-4 p-4 p-md-5 mb-4 shadow-sm">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-8">
+      <span class="badge text-bg-light text-primary mb-3">Django CRUD Project</span>
+      <h1 class="display-5 fw-bold">Student Management System</h1>
+      <p class="lead mb-4">Manage students, courses and student notes through one simple responsive application using three different databases.</p>
+      <a class="btn btn-light btn-lg me-2" href="{% url 'student_add' %}">Add Student</a>
+      <a class="btn btn-outline-light btn-lg" href="{% url 'student_list' %}">View Students</a>
+    </div>
+    <div class="col-lg-4 text-center">
+      <div class="display-1">🎓</div>
+    </div>
+  </div>
+</section>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm stat-card">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div><p class="text-secondary mb-1">Students</p><h2 class="fw-bold">{{ student_count }}</h2></div>
+          <span class="database-badge mysql">MySQL</span>
+        </div>
+        <a href="{% url 'student_list' %}" class="btn btn-outline-primary mt-3">Manage Students</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm stat-card">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div><p class="text-secondary mb-1">Courses</p><h2 class="fw-bold">{{ course_count }}</h2></div>
+          <span class="database-badge postgres">PostgreSQL</span>
+        </div>
+        <a href="{% url 'course_list' %}" class="btn btn-outline-primary mt-3">Manage Courses</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm stat-card">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div><p class="text-secondary mb-1">Student Notes</p><h2 class="fw-bold">{{ note_count }}</h2></div>
+          <span class="database-badge mongo">MongoDB</span>
+        </div>
+        <a href="{% url 'note_list' %}" class="btn btn-outline-primary mt-3">Manage Notes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-body p-4">
+    <h3 class="h5 fw-bold">Project purpose</h3>
+    <p class="mb-0 text-secondary">This project demonstrates Create, Read, Update and Delete operations in Django while routing student data to MySQL, course data to PostgreSQL and document-style notes to MongoDB.</p>
+  </div>
+</div>
+{% endblock %}

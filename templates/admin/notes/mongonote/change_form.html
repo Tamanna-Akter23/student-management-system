@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div id="content-main">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div>
+      <fieldset class="module aligned">
+        <div class="form-row">
+          <div><label class="required" for="id_student_id">Student ID:</label>
+          <input type="text" name="student_id" id="id_student_id" maxlength="20" required value="{{ item.student_id|default:'' }}"></div>
+        </div>
+        <div class="form-row">
+          <div><label class="required" for="id_note">Note:</label>
+          <textarea name="note" id="id_note" rows="8" required>{{ item.note|default:'' }}</textarea></div>
+        </div>
+      </fieldset>
+      <div class="submit-row">
+        <input type="submit" value="Save" class="default">
+        {% if delete_url %}<p class="deletelink-box"><a href="{{ delete_url }}" class="deletelink">Delete</a></p>{% endif %}
+        <p><a href="{% url 'admin:notes_mongonote_changelist' %}">Cancel</a></p>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
