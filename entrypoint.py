@@ -1,21 +1,13 @@
-import os
-import socket
-import time
+#!/bin/sh
 
-services = [
-    ('MySQL', os.getenv('MYSQL_HOST', 'mysql'), int(os.getenv('MYSQL_PORT', '3306'))),
-    ('PostgreSQL', os.getenv('POSTGRES_HOST', 'postgres'), int(os.getenv('POSTGRES_PORT', '5432'))),
-    ('MongoDB', 'mongo', 27017),
-]
+# ডাটাবেজ মাইগ্রেশন রান করা
+python manage.py migrate --noinput
 
-for name, host, port in services:
-    print(f'Waiting for {name} at {host}:{port}...')
-    for attempt in range(60):
-        try:
-            with socket.create_connection((host, port), timeout=2):
-                print(f'{name} is ready.')
-                break
-        except OSError:
-            time.sleep(2)
-    else:
-        raise SystemExit(f'{name} did not become ready in time.')
+# স্ট্যাটিক ফাইল কালেক্ট করা
+python manage.py collectstatic --noinput
+
+# সুপারইউজার তৈরি (Username: Tamanna এবং Password: admin123)
+python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='Tamanna').exists() or User.objects.create_superuser('Tamanna', 'tamanna@example.com', 'admin123')"
+
+# গিউনিকর্ন সার্ভার স্টার্ট করা
+exec gunicorn config.wsgi:application --bind 0.0.0.0:10000
