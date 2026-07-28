@@ -15,5 +15,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# মাইগ্রেশন, স্ট্যাটিক ফাইল কালেকশন এবং গিউনিকর্ন একসাথে নিরাপদে রান করার জন্য
-CMD python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:10000
+# শুধু সার্ভার স্টার্ট করার কমান্ড (মাইগ্রেশন বাদ)
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:10000"]

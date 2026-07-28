@@ -60,21 +60,15 @@ TEMPLATES = [{
 }]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+import dj_database_url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PGDATABASE', 'neondb'),
-        'USER': os.getenv('PGUSER', 'neondb_owner'),
-        'PASSWORD': os.getenv('PGPASSWORD', ''),
-        'HOST': os.getenv('PGHOST', ''),
-        'PORT': os.getenv('PGPORT', '5432'),
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
-
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
