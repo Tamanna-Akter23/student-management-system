@@ -22,4 +22,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # হোয়াইটনিউজ (WhiteNoise) স্ট্যাটিক ফাইলের জন্য কনফিগার করা থাকলে গিউনিকর্ন দিয়ে সার্ভার রান করা
-CMD ["gunicorn", "student_management_system.wsgi:application", "--bind", "0.0.0.0:10000"]
+
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:10000"]
