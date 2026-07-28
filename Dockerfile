@@ -1,3 +1,4 @@
+
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -15,7 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# ডিপ্লয়মেন্টের সময় মাইগ্রেশন ও স্ট্যাটিক ফাইল কালেকশন করার জন্য
-RUN python manage.py collectstatic --noinput
+# এন্ট্রি পয়েন্ট ফাইলে এক্সিকিউট পারমিশন দেওয়া
+RUN chmod +x entrypoint.sh
 
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:10000"]
+# এন্ট্রি পয়েন্ট রান করার কমান্ড
+CMD ["./entrypoint.sh"]
