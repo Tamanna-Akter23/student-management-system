@@ -16,5 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# সরাসরি এখানে মাইগ্রেশন, স্ট্যাটিক ফাইল এবং সার্ভার স্টার্ট কমান্ড দিয়ে দেওয়া হলো
-CMD python manage.py migrate --noinput && python manage.py collectstatic --noinput && python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='Tamanna').exists() or User.objects.create_superuser('Tamanna', 'tamanna@example.com', 'admin123')" && gunicorn config.wsgi:application --bind 0.0.0.0:10000
+# চূড়ান্ত ও নির্ভুল সিএমডি কমান্ড
+CMD python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:10000
