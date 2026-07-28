@@ -11,21 +11,14 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.environ.get(
-        "ALLOWED_HOSTS",
-        "127.0.0.1,localhost"
-    ).split(",")
-    if host.strip()
+    'student-management-system-1-hx91.onrender.com',
+    '.onrender.com',
+    '127.0.0.1',
+    'localhost'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.environ.get(
-        "CSRF_TRUSTED_ORIGINS",
-        ""
-    ).split(",")
-    if origin.strip()
+    'https://student-management-system-1-hx91.onrender.com',
 ]
 
 INSTALLED_APPS = [
@@ -52,6 +45,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'DIRS': [BASE_DIR / 'templates'],
@@ -64,70 +58,22 @@ TEMPLATES = [{
         ]
     },
 }]
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.mysql',
-
-    'NAME': os.getenv(
-        'MYSQLDATABASE',
-        os.getenv('MYSQL_DATABASE', 'student_db')
-    ),
-
-    'USER': os.getenv(
-        'MYSQLUSER',
-        os.getenv('MYSQL_USER', 'student_user')
-    ),
-
-    'PASSWORD': os.getenv(
-        'MYSQLPASSWORD',
-        os.getenv('MYSQL_PASSWORD', 'student_pass')
-    ),
-
-    'HOST': os.getenv(
-        'MYSQLHOST',
-        os.getenv('MYSQL_HOST', 'mysql')
-    ),
-
-    'PORT': os.getenv(
-        'MYSQLPORT',
-        os.getenv('MYSQL_PORT', '3306')
-    ),
-
-    'OPTIONS': {
-        'charset': 'utf8mb4',
-    },
-},'postgres': {
-    'ENGINE': 'django.db.backends.postgresql',
-
-    'NAME': os.getenv(
-        'PGDATABASE',
-        os.getenv('POSTGRES_DB', 'course_db')
-    ),
-
-    'USER': os.getenv(
-        'PGUSER',
-        os.getenv('POSTGRES_USER', 'course_user')
-    ),
-
-    'PASSWORD': os.getenv(
-        'PGPASSWORD',
-        os.getenv('POSTGRES_PASSWORD', 'course_pass')
-    ),
-
-    'HOST': os.getenv(
-        'PGHOST',
-        os.getenv('POSTGRES_HOST', 'postgres')
-    ),
-
-    'PORT': os.getenv(
-        'PGPORT',
-        os.getenv('POSTGRES_PORT', '5432')
-    ),
-},
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('PGDATABASE', 'neondb'),
+        'USER': os.getenv('PGUSER', 'neondb_owner'),
+        'PASSWORD': os.getenv('PGPASSWORD', ''),
+        'HOST': os.getenv('PGHOST', ''),
+        'PORT': os.getenv('PGPORT', '5432'),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
-DATABASE_ROUTERS = ['config.router.DatabaseRouter']
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -135,7 +81,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
